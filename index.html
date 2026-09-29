@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f7f8f5">
+	<title>Daymark | Coaching attendance</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<div class="app-shell">
+		<aside class="sidebar" id="sidebar">
+			<a class="brand" href="#overview" aria-label="Daymark home">
+				<span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+				<span class="brand-copy"><strong>daymark</strong><small>COACHING CENTER</small></span>
+			</a>
+			<div class="sidebar-label">WORKSPACE</div>
+			<nav class="primary-nav" aria-label="Main navigation">
+				<button class="nav-link active" data-view="overview"><span class="nav-icon">⌂</span><span>Overview</span></button>
+				<div class="nav-group-label">ATTENDANCE</div>
+				<button class="nav-link" data-view="students-attendance"><span class="nav-icon">▤</span><span>Students</span><span class="nav-count" id="student-nav-count">0</span></button>
+				<button class="nav-link" data-view="teachers-attendance"><span class="nav-icon">◷</span><span>Teachers</span></button>
+				<div class="nav-group-label">ADMINISTRATION</div>
+				<button class="nav-link" data-view="timetable"><span class="nav-icon">▦</span><span>Classes & periods</span></button>
+				<button class="nav-link" data-view="students-admin"><span class="nav-icon">♙</span><span>Student roster</span></button>
+				<button class="nav-link" data-view="teachers-admin"><span class="nav-icon">♧</span><span>Teachers</span></button>
+				<button class="nav-link" data-view="subjects-admin"><span class="nav-icon">▧</span><span>Subjects</span></button>
+			</nav>
+			<div class="sidebar-bottom">
+				<div class="center-status"><span class="status-dot"></span><span><strong>Center is open</strong><small>All sessions available</small></span></div>
+				<div class="admin-profile"><div class="avatar avatar-admin">AD</div><span><strong>Administrator</strong><small>Center admin</small></span><span class="profile-menu" aria-hidden="true">···</span></div>
+			</div>
+		</aside>
+
+		<main class="main-area">
+			<header class="topbar">
+				<button class="mobile-menu icon-button" id="mobile-menu" aria-label="Toggle navigation">☰</button>
+				<div class="breadcrumb"><span>Workspace</span><span class="crumb-divider">/</span><strong id="breadcrumb-current">Overview</strong></div>
+				<div class="topbar-actions"><div class="today-chip"><span class="today-dot"></span><span id="today-label">Today</span></div><button class="icon-button notification-button" aria-label="Notifications"><span>♧</span><i></i></button><div class="avatar avatar-top">AD</div></div>
+			</header>
+
+			<section class="view active" id="view-overview">
+				<div class="page-heading overview-heading"><div><p class="eyebrow" id="overview-date">TUESDAY, 29 SEPTEMBER</p><h1>Good morning<span class="heading-period">.</span></h1><p class="page-subtitle">Here’s what’s happening at your center today.</p></div><button class="button button-primary" data-view-jump="students-attendance"><span>＋</span> Take attendance</button></div>
+				<div class="overview-stats" id="overview-stats"></div>
+				<div class="overview-grid">
+					<section class="panel schedule-panel"><div class="panel-heading"><div><p class="eyebrow">ON THE TIMETABLE</p><h2>Today’s periods</h2></div><button class="text-button" data-view-jump="timetable">Full timetable <span>↗</span></button></div><div class="session-tabs" id="overview-session-tabs" role="tablist" aria-label="Coaching session"><button class="session-tab active" data-session="Morning">Morning <span class="session-count" data-session-count="Morning">0</span></button><button class="session-tab" data-session="Day">Day <span class="session-count" data-session-count="Day">0</span></button><button class="session-tab" data-session="Evening">Evening <span class="session-count" data-session-count="Evening">0</span></button></div><div class="period-list" id="overview-period-list"></div></section>
+					<section class="panel snapshot-panel"><div class="panel-heading"><div><p class="eyebrow">ATTENDANCE SNAPSHOT</p><h2>Today at a glance</h2></div><span class="snapshot-date" id="snapshot-date"></span></div><div class="snapshot-figure"><div class="snapshot-ring" id="snapshot-ring"><div><strong id="snapshot-percent">0%</strong><small>present</small></div></div><div class="snapshot-copy"><strong id="snapshot-total">0 / 0</strong><span>students marked present</span></div></div><div class="snapshot-legend"><span><i class="legend-present"></i> Present <strong id="legend-present-count">0</strong></span><span><i class="legend-absent"></i> Absent <strong id="legend-absent-count">0</strong></span><span><i class="legend-unmarked"></i> Not marked <strong id="legend-unmarked-count">0</strong></span></div><div class="snapshot-note"><span class="note-icon">↗</span><span id="snapshot-note-text">Mark attendance to see your daily summary.</span></div></section>
+				</div>
+				<div class="overview-lower-grid"><section class="panel activity-panel"><div class="panel-heading"><div><p class="eyebrow">QUICK VIEW</p><h2>Class attendance</h2></div><button class="text-button" data-view-jump="students-attendance">Open register <span>↗</span></button></div><div id="class-attendance-list" class="class-attendance-list"></div></section><section class="panel staff-panel"><div class="panel-heading"><div><p class="eyebrow">ON THE CLOCK</p><h2>Teacher check-in</h2></div><button class="text-button" data-view-jump="teachers-attendance">View all <span>↗</span></button></div><div id="teacher-checkin-list" class="teacher-checkin-list"></div></section></div>
+			</section>
+
+			<section class="view" id="view-students-attendance">
+				<div class="page-heading"><div><p class="eyebrow">DAILY REGISTER</p><h1>Student attendance</h1><p class="page-subtitle">Mark students present or absent for each scheduled class period.</p></div><div class="heading-actions"><button class="button button-secondary" id="reset-student-period">Reset period</button><button class="button button-primary" id="mark-all-present">✓ Mark all present</button></div></div>
+				<div class="toolbar-panel attendance-toolbar"><label class="field-label">DATE<input type="date" id="student-date"></label><label class="field-label">SESSION<select id="student-session"><option>Morning</option><option>Day</option><option>Evening</option></select></label><label class="field-label">CLASS & PERIOD<select id="student-period"></select></label><div class="toolbar-spacer"></div><div class="attendance-progress" id="student-progress"></div></div>
+				<div class="register-panel panel"><div class="register-heading"><div><p class="eyebrow" id="register-period-detail">CLASS REGISTER</p><h2 id="register-class-title">Choose a class period</h2><p id="register-teacher-detail" class="muted-copy"></p></div><div class="register-actions"><button class="button button-secondary" id="mark-all-absent">Mark all absent</button></div></div><div class="table-scroll"><table class="data-table student-table"><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>CLASS</th><th>ATTENDANCE</th></tr></thead><tbody id="student-register-body"></tbody></table></div><div class="empty-state hidden" id="student-empty"><span class="empty-icon">▤</span><strong>No students in this class yet</strong><span>Add students to this class from the student roster.</span><button class="text-button" data-view-jump="students-admin">Go to student roster ↗</button></div><div class="register-footer"><span id="register-footer-summary">Attendance is saved automatically.</span><span class="autosave-state"><i></i> Saved automatically</span></div></div>
+			</section>
+
+			<section class="view" id="view-teachers-attendance">
+				<div class="page-heading"><div><p class="eyebrow">STAFF REGISTER</p><h1>Teacher attendance</h1><p class="page-subtitle">Check in the teacher assigned to each class and subject period.</p></div><div class="heading-actions"><button class="button button-secondary" id="reset-teacher-day">Reset day</button><button class="button button-primary" id="teacher-mark-all">✓ Mark scheduled present</button></div></div>
+				<div class="toolbar-panel attendance-toolbar"><label class="field-label">DATE<input type="date" id="teacher-date"></label><label class="field-label">SESSION<select id="teacher-session"><option>All sessions</option><option>Morning</option><option>Day</option><option>Evening</option></select></label><div class="toolbar-spacer"></div><div class="attendance-progress" id="teacher-progress"></div></div>
+				<div class="teacher-periods" id="teacher-periods"></div>
+			</section>
+
+			<section class="view" id="view-timetable">
+				<div class="page-heading"><div><p class="eyebrow">ADMINISTRATION</p><h1>Classes & periods</h1><p class="page-subtitle">Build the shared timetable that connects classes, subjects, and teachers.</p></div><div class="heading-actions"><button class="button button-secondary" data-add="class"><span>＋</span> Add class</button><button class="button button-primary" data-add="period"><span>＋</span> Add period</button></div></div>
+				<div class="admin-callout"><span class="callout-mark">↗</span><span>Each period links one class, one subject, and one teacher. Attendance registers use these links automatically.</span></div>
+				<div class="admin-filter-row"><div class="segmented-control" id="timetable-session-filter"><button class="active" data-filter="All sessions">All sessions</button><button data-filter="Morning">Morning</button><button data-filter="Day">Day</button><button data-filter="Evening">Evening</button></div><span id="period-count-label" class="muted-copy"></span></div>
+				<div class="panel table-panel"><div class="table-scroll"><table class="data-table"><thead><tr><th>PERIOD</th><th>SESSION</th><th>CLASS</th><th>SUBJECT</th><th>TEACHER</th><th>TIME</th><th></th></tr></thead><tbody id="timetable-body"></tbody></table></div><div class="empty-state hidden" id="timetable-empty"><span class="empty-icon">▦</span><strong>No periods scheduled</strong><span>Add a period to start connecting your classes and teachers.</span><button class="button button-primary" data-add="period">＋ Add period</button></div></div>
+				<section class="class-admin-section"><div class="section-heading"><div><p class="eyebrow">CLASS ROSTER</p><h2>Classes</h2></div><span class="muted-copy">Students and periods stay linked to their class</span></div><div class="subject-grid classes-grid" id="classes-admin-grid"></div></section>
+				<div class="helper-line"><span>Classes</span><strong id="helper-classes">0</strong><span>Teachers</span><strong id="helper-teachers">0</strong><span>Subjects</span><strong id="helper-subjects">0</strong></div>
+			</section>
+
+			<section class="view" id="view-students-admin">
+				<div class="page-heading"><div><p class="eyebrow">ADMINISTRATION</p><h1>Student roster</h1><p class="page-subtitle">Keep class lists up to date so attendance registers stay aligned.</p></div><button class="button button-primary" data-add="student"><span>＋</span> Add student</button></div>
+				<div class="toolbar-panel list-toolbar"><label class="search-field"><span>⌕</span><input type="search" id="student-search" placeholder="Search students or ID" aria-label="Search students or ID"></label><label class="field-label compact-field">CLASS<select id="student-class-filter"></select></label><span class="toolbar-spacer"></span><span class="muted-copy" id="student-count-label"></span></div>
+				<div class="panel table-panel"><div class="table-scroll"><table class="data-table"><thead><tr><th>STUDENT</th><th>STUDENT ID</th><th>CLASS</th><th>CONTACT</th><th>ENROLLED</th><th></th></tr></thead><tbody id="students-admin-body"></tbody></table></div><div class="empty-state hidden" id="students-admin-empty"><span class="empty-icon">♙</span><strong>No students found</strong><span>Add a student or change your search.</span><button class="button button-primary" data-add="student">＋ Add student</button></div></div>
+			</section>
+
+			<section class="view" id="view-teachers-admin">
+				<div class="page-heading"><div><p class="eyebrow">ADMINISTRATION</p><h1>Teachers</h1><p class="page-subtitle">Manage teaching staff and their scheduled periods.</p></div><button class="button button-primary" data-add="teacher"><span>＋</span> Add teacher</button></div><div class="staff-grid" id="teachers-admin-grid"></div>
+			</section>
+			<section class="view" id="view-subjects-admin">
+				<div class="page-heading"><div><p class="eyebrow">ADMINISTRATION</p><h1>Subjects</h1><p class="page-subtitle">Manage the subjects available for your class timetable.</p></div><button class="button button-primary" data-add="subject"><span>＋</span> Add subject</button></div><div class="subject-grid" id="subjects-admin-grid"></div>
+			</section>
+			<footer class="page-footer"><span>DAYMARK <span class="footer-dot">·</span> COACHING ATTENDANCE</span><span>All records are saved on this device</span></footer>
+		</main>
+	</div>
+	<dialog class="form-dialog" id="entity-dialog"><form id="entity-form" method="dialog"><div class="dialog-heading"><div><p class="eyebrow" id="dialog-eyebrow">ADMINISTRATION</p><h2 id="dialog-title">Add record</h2></div><button class="dialog-close" type="button" id="dialog-close" aria-label="Close">×</button></div><div class="dialog-fields" id="dialog-fields"></div><p class="form-error" id="form-error" role="alert"></p><div class="dialog-actions"><button class="button button-secondary" type="button" id="dialog-cancel">Cancel</button><button class="button button-primary" type="submit" id="dialog-submit">Save record</button></div></form></dialog>
+	<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
